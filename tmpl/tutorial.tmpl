@@ -1,0 +1,10 @@
+<?js if (children.length > 0) { ?>
+<?js
+        var self = this;
+        children.forEach(function(t) { ?>
+<?js if (children.length > 1) { ?>* <?js } ?><?js= self.tutoriallink(t.name) ?>
+<?js }); ?>
+<?js } ?>
+h2. <?js= header ?>
+
+<?js= content ?>

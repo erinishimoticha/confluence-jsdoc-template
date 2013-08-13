@@ -1,0 +1,9 @@
+<?js
+    var data = obj;
+?>
+<?js if (data.description) { ?>
+<?js= data.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?>
+<?js } 
+if (data.type && data.type.names) { ?>
+<?js= this.partial('type.tmpl', data.type.names).replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?>
+<?js } ?>
