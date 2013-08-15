@@ -6,13 +6,8 @@ var self = this;
 if (data.defaultvalue && data.defaultvaluetype === 'object') {
     data.defaultvalue = "{code}" + data.defaultvalue + "{code}";
 }
-?><?js
-        var properties = data.properties;
-        if (properties && properties.length && properties.forEach) {
-    ?>h5. Properties:
-<?js= this.partial('properties.tmpl', properties) ?>
-<?js } ?>
-h5. Details
+?>
+h2. Details
 <?js } ?><?js if (data.inherited && data.inherits) { ?>Inherited From: <?js= this.linkto(data.inherits, this.htmlsafe(data.inherits)) ?>
 <?js } ?><?js if (data.defaultvalue) {?>Default Value: <?js= data.defaultvalue ?>
 <?js if (data.version) {?>Version <?js= version ?>
@@ -20,4 +15,16 @@ h5. Details
 <?js } ?><?js if (data.author && author.length) {?>Authors: <?js author.forEach(function(a, i) { ?><?js= self.resolveAuthorLinks(a) ?><?js if (i+1 < author.length) {?>, <?js } }); ?>
 <?js } ?><?js if (data.copyright) {?>Copyright: <?js= copyright ?> <?js } ?><?js if (data.license) {?>License: <?js= license ?>
 <?js } ?><?js if (data.meta) {?>Source: <?js= self.linkto(meta.filename) ?>, <?js= self.linkto(meta.filename, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?><?js } ?><?js if (data.since) {?> Since: <?js= since ?>
+<?js } ?><?js
+        var properties = data.properties;
+        if (properties && properties.length && properties.forEach) {
+    ?>
+h3. Properties<?js= this.partial('properties.tmpl', properties) ?>
+<?js } ?>
+h3. More Information<?js if (data.tutorials && tutorials.length) {?>
+h4. Tutorials <?js= self.bulletlist(see, self.tutoriallink) ?>
+<?js } ?><?js if (data.see && see.length) {?>
+h4. See<?js= self.bulletlist(see, self.linkto) ?>
+<?js } ?><?js if (data.todo && todo.length) {?>
+h4. To Do<?js= self.bulletlist(todo) ?>
 <?js } ?>

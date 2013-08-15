@@ -9,18 +9,15 @@
 <?js } else { ?>
 h1. <?js if (doc.ancestors && doc.ancestors.length) { ?><?js= doc.ancestors.join('') ?><?js } ?><?js= doc.name ?><?js if (doc.variation) { ?> (<?js= doc.variation ?>)
 <?js } ?>
-<?js if (doc.classdesc) { ?><?js= doc.classdesc ?>
+<?js if (doc.classdesc) { ?><?js= doc.classdesc.replace(/\n+/g, "").replace(/([\{\}])/, "\\$1") ?>
 <?js } ?>
-<?js if (doc.kind === 'module' && doc.module) { ?><?js= self.partial('method.tmpl', doc.module) ?><?js } ?>
-<?js if (doc.kind === 'class') { ?>
-<?js= self.partial('method.tmpl', doc) ?><?js } else { ?><?js if (doc.description) { ?>
-<?js= doc.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js } ?>
-<?js= self.partial('details.tmpl', doc) ?>
+<?js= self.partial('constructor.tmpl', doc) ?>
+<?js= self.partial('classdetails.tmpl', doc) ?>
 <?js if (doc.examples && doc.examples.length) { ?>
 
 h3. Example<?js= doc.examples.length > 1? 's':'' ?>
 
-<?js= self.partial('examples.tmpl', doc.examples) ?><?js } ?><?js } ?>
+<?js= self.partial('examples.tmpl', doc.examples) ?><?js } ?>
 <?js if (doc.augments && doc.augments.length) { ?>
 
 h3. Extends

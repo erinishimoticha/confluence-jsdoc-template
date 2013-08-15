@@ -477,7 +477,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.bulletlist = wikiHelper.bulletlist;
 
     // once for all
-    view.nav = ''//buildNav(members);
+    view.nav = '';//buildNav(members);
     attachModuleSymbols( find({ kind: ['class', 'function'], longname: {left: 'module:'} }),
         members.modules );
 
