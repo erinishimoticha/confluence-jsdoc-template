@@ -27,12 +27,10 @@ h3. Mixes In
 <?js= self.bulletlist(doc.mixes, self.linkto) ?><?js } ?>
 <?js if (doc.requires && doc.requires.length) { ?>
 h3. Requires
-      
 <?js= self.bulletlist(doc.requires, self.linkto) ?><?js } ?><?js
     var classes = self.find({kind: 'class', memberof: doc.longname}); 
     if (doc.kind !== 'globalobj' && classes && classes.length) { 
 ?>
-
 h3. Classes
 <?js classes.forEach(function(c) { ?><?js if (classes.length > 1) { ?>* <?js } ?><?js= self.linkto(c.longname, c.name) ?><?js if (c.summary) { ?> (<?js= c.summary.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?>)<?js } ?><?js }); ?><?js } ?><?js
     var namespaces = self.find({kind: 'namespace', memberof: doc.longname}); 
