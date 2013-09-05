@@ -169,10 +169,25 @@ function buildLink(longname, linkText, options) {
     // handle cases like:
     // @see <http://example.org>
     // @see http://example.org
+    longname = longname.replace(/\[\]$/g, '');
     stripped = longname ? longname.replace(/^<|>$/g, '') : '';
     if ( hasUrlPrefix(stripped) ) {
         url = stripped;
         text = linkText || stripped;
+    }
+    // Promises
+    else if (longname && longname.search(/promise/i) > -1) {
+        var interiorUrl = longname.replace(/promise<(.*)>/i, "$1");
+        interiorUrl = buildLink(interiorUrl, interiorUrl, {
+            linkMap: longnameToUrl
+        });
+        text = "Promise<" + interiorUrl + ">";
+        return text;
+    }
+    // Link events to the anchors on their parent pages.
+    else if (longname && longname.search(/#event:/) !== -1) {
+        text = longname.replace("event:", '');
+        url = longname.replace(/event:.*/, 'Events');
     }
     // handle complex type expressions that may require multiple links
     // (but skip anything that looks like an inline tag)
@@ -185,14 +200,12 @@ function buildLink(longname, linkText, options) {
         text = linkText || longname;
     }
 
-    text = options.monospace ? '<code>' + text + '</code>' : text;
+    text = options.monospace ? '{{' + text + '}}' : text;
 
-    if (!url) {
-        return text;
+    if (url) {
+        text = util.format('[%s|%s]', text, url);
     }
-    else {
-        return util.format('[%s|%s]', url, /*fragmentString, classString,*/ text);
-    }
+    return text;
 }
 
 /**
@@ -227,21 +240,21 @@ var bulletlist = exports.bulletlist = function(list, formatter, arg) {
     formatter = formatter || function(){};
     if (list) {
         if (list.length == 1) {
-            string = list[0]
+            string = list[0];
         } else if (list.length > 1) {
             string += "\n";
             list.forEach(function(thing) {
-		if (arg) {
-                	string += "* " + formatter(arg, thing) + "\n";
-		} else {
-                	string += "* " + formatter(thing) + "\n";
-		}
+                if (arg) {
+                    string += "* " + formatter(arg, thing) + "\n";
+                } else {
+                    string += "* " + formatter(thing) + "\n";
+                }
             });
             string += "\n";
-	}
+        }
     }
     return string;
-}
+};
 
 function useMonospace(tag, text) {
     var cleverLinks;
@@ -366,8 +379,8 @@ exports.resolveLinks = function(str) {
         var leading = extractLeadingText(string, tagInfo.completeTag);
         string = leading.string;
 
-        return string.replace( tagInfo.completeTag, toTutorial(tagInfo.text, leading.leadingText) );
         console.log(tagInfo.completeTag + ":" + tagInfo.txt + ":" + leading.leadingText + "\n");
+        return string.replace( tagInfo.completeTag, toTutorial(tagInfo.text, leading.leadingText) );
     }
 
     var replacers = {
