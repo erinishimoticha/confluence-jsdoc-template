@@ -12,7 +12,7 @@ if (data.defaultvalue && data.defaultvaluetype === 'object') {
     ?>h5. Properties:
 <?js= this.partial('properties.tmpl', properties) ?>
 <?js } ?>
-h5. Details
+<?js if ((data.inherited && data.inherits) || (data.defaultvalue) || (data.deprecated) || (data.author && author.length) || (data.copyright)) { ?>h5. Details<?js } ?>
 <?js } ?><?js if (data.inherited && data.inherits) { ?>Inherited From: <?js= this.linkto(data.inherits, this.htmlsafe(data.inherits)) ?>
 <?js } ?><?js if (data.defaultvalue) {?>Default Value: <?js= data.defaultvalue ?>
 <?js if (data.version) {?>Version <?js= version ?>
