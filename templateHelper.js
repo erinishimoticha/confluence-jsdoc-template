@@ -201,6 +201,7 @@ function buildLink(longname, linkText, options) {
     }
 
     text = options.monospace ? '{{' + text + '}}' : text;
+    text = text.replace(/([\[\]])/g, "\\$1");
 
     if (url) {
         text = util.format('[%s|%s]', text, url);
