@@ -14,8 +14,8 @@ convertWikiToStorageFormat API to convert the markup into HTML for internal stor
 Todo
 ----
 
-1. Support all tags.
-2. Make the pages prettier and make use of the table of contents macro.
+1. Support all tags. Need willing testers in order to make this happen.
+2. Make the pages prettier and make use of the table of contents macro. Design help is needed.
 3. Improve link detection so that things like list return values are found and linked.
 
 Contribute
