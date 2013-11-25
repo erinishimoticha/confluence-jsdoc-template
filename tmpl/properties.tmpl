@@ -1,6 +1,6 @@
 <?js
     var props = obj;
-    
+
     /* sort subprops under their parent props (like opts.classname) */
     var parentProp = null;
     props.forEach(function(prop, i) {
@@ -15,23 +15,23 @@
             parentProp = prop;
         }
     });
-    
+
     /* determine if we need extra columns, "attributes" and "default" */
     props.hasAttributes = false;
     props.hasDefault = false;
     props.hasName = false;
-    
+
     props.forEach(function(prop) {
         if (!prop) { return; }
-        
+
         if (prop.optional || prop.nullable) {
             props.hasAttributes = true;
         }
-        
+
         if (prop.name) {
             props.hasName = true;
         }
-        
+
         if (typeof prop.defaultvalue !== 'undefined') {
             props.hasDefault = true;
         }
@@ -42,5 +42,5 @@
 	    props.forEach(function(prop) {
 	        if (!prop) { return; }
 	?>
-<?js if (props.hasName) {?>|<?js= prop.name ?><?js } ?>|<?js if (prop.type && prop.type.names) {?><?js= self.partial('type.tmpl', prop.type.names).replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js if (props.hasAttributes) {?>|<?js if (prop.optional) { ?>&lt;optional>, <?js } ?><?js if (prop.nullable) { ?>&lt;nullable>, <?js } ?><?js } ?><?js if (props.hasDefault) {?>|<?js if (typeof prop.defaultvalue !== 'undefined') { ?><?js= self.htmlsafe(prop.defaultvalue) ?><?js } ?><?js } if (prop.description) { prop.description = prop.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") } ?>|<?js= prop.description ?><?js if (prop.subprops) { ?>*Properties*<?js= self.partial('properties.tmpl', prop.subprops) ?><?js } ?>|<?js }); ?>
+<?js if (props.hasName) {?> | <?js= prop.name ?><?js } ?> | <?js if (prop.type && prop.type.names) {?><?js= self.partial('type.tmpl', prop.type.names).replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js if (props.hasAttributes) {?> | <?js if (prop.optional) { ?>&lt;optional> <?js } ?><?js if (prop.nullable) { ?>&lt;nullable> <?js } ?><?js } ?> | <?js if (props.hasDefault) {?> | <?js if (typeof prop.defaultvalue !== 'undefined') { ?><?js= self.htmlsafe(prop.defaultvalue) ?><?js } ?><?js } if (prop.description) { prop.description = prop.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") } ?> | <?js= prop.description ?><?js if (prop.subprops) { ?>*Properties*<?js= self.partial('properties.tmpl', prop.subprops) ?><?js } ?> | <?js }); ?>
 
