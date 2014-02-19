@@ -178,9 +178,11 @@ function buildLink(longname, linkText, options) {
     // Promises
     else if (longname && longname.search(/promise/i) > -1) {
         var interiorUrl = longname.replace(/promise<(.*)>/i, "$1");
-        interiorUrl = buildLink(interiorUrl, interiorUrl, {
-            linkMap: longnameToUrl
-        });
+        if (interiorUrl) {
+            interiorUrl = buildLink(interiorUrl, interiorUrl, {
+                linkMap: longnameToUrl
+            });
+        }
         text = "Promise<" + interiorUrl + ">";
         return text;
     }
@@ -238,7 +240,7 @@ var linkto = exports.linkto = function(longname, linkText, cssClass, fragmentId)
 
 var bulletlist = exports.bulletlist = function(list, formatter, arg) {
     var string = '';
-    formatter = formatter || function(){};
+    formatter = formatter || function(a, b){ return b || a; };
     if (list) {
         if (list.length == 1) {
             string = list[0];
