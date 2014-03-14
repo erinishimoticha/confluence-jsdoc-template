@@ -171,19 +171,22 @@ function buildLink(longname, linkText, options) {
     // @see http://example.org
     longname = longname.replace(/\[\]$/g, '');
     stripped = longname ? longname.replace(/^<|>$/g, '') : '';
+    var container = longname.match(/(promise|array)/i);
     if ( hasUrlPrefix(stripped) ) {
         url = stripped;
         text = linkText || stripped;
     }
-    // Promises
-    else if (longname && longname.search(/promise/i) > -1) {
-        var interiorUrl = longname.replace(/promise<(.*)>/i, "$1");
+    // Promises & Arrays
+    else if (longname && container && container.length && longname.match(/[><]/)) {
+        var reg = RegExp(container[0] + '<(.*)>', 'i');
+        console.log('reg', reg);
+        var interiorUrl = longname.replace(reg, "$1");
         if (interiorUrl) {
             interiorUrl = buildLink(interiorUrl, interiorUrl, {
                 linkMap: longnameToUrl
             });
         }
-        text = "Promise<" + interiorUrl + ">";
+        text = container[0] + "<" + interiorUrl + ">";
         return text;
     }
     // Link events to the anchors on their parent pages.
