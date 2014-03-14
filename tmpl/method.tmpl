@@ -9,7 +9,8 @@ if (data.description) { ?><?js= data.description.replace(/\n/g, ' ').replace(/([
 Type: <?js= self.partial('type.tmpl', data.type.names).replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js if (data['this']) { ?>
 This: <?js= this.linkto(data['this'], data['this']) ?>
 <?js } ?><?js if (data.params && params.length) { ?>
-Parameters:<?js= this.partial('params.tmpl', params) ?><?js } ?><?js= this.partial('details.tmpl', data) ?><?js if (data.fires && fires.length) { ?>
+Parameters:<?js= this.partial('params.tmpl', params) ?><?js } ?>
+<?js= this.partial('details.tmpl', data) ?><?js if (data.fires && fires.length) { ?>
 Fires: <?js= self.bulletlist(fires, self.linkto) ?><?js } ?><?js if (data.listens && listens.length) { ?>
 Listens to Events:<?js= self.bulletlist(listens, self.linkto) ?><?js } ?><?js if (data.listeners && listeners.length) { ?>
 Listeners of This Event:<?js= self.bulletlist(listeners, self.linkto) ?><?js } ?><?js if (data.exceptions && exceptions.length) { ?>
