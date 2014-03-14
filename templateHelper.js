@@ -179,7 +179,6 @@ function buildLink(longname, linkText, options) {
     // Promises & Arrays
     else if (longname && container && container.length && longname.match(/[><]/)) {
         var reg = RegExp(container[0] + '<(.*)>', 'i');
-        console.log('reg', reg);
         var interiorUrl = longname.replace(reg, "$1");
         if (interiorUrl) {
             interiorUrl = buildLink(interiorUrl, interiorUrl, {
@@ -385,7 +384,6 @@ exports.resolveLinks = function(str) {
         var leading = extractLeadingText(string, tagInfo.completeTag);
         string = leading.string;
 
-        console.log(tagInfo.completeTag + ":" + tagInfo.txt + ":" + leading.leadingText + "\n");
         return string.replace( tagInfo.completeTag, toTutorial(tagInfo.text, leading.leadingText) );
     }
 
