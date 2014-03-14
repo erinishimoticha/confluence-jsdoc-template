@@ -18,6 +18,10 @@ Todo
 1. Support all tags. Need willing testers in order to make this happen.
 2. Make the pages prettier and make use of the table of contents macro. Design help is needed.
 3. Improve link detection so that things like list return values are found and linked.
+4. apply patch
+5. Fix properties on a parameter
+6. Implement class properties
+7. fix @fires
 
 Contribute
 -------
