@@ -22,6 +22,8 @@ Todo
 5. Fix properties on a parameter
 6. Implement class properties
 7. fix @fires
+8. Fix empty promise/array pattern Promise where no <> exists.
+9. Symbols duplicated when documented twice. Is this expected?
 
 Contribute
 -------
