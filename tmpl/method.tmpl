@@ -6,7 +6,7 @@ h4. <?js= data.attribs + (kind === 'class' ? 'new ' : '') + name + (kind !== 'ev
 <?js if (data.summary) { ?><?js= summary.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js }
 if (data.description) { ?><?js= data.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js } ?>
 <?js if (kind === 'event' && data.type && data.type.names) {?>
-Type: <?js= self.partial('type.tmpl', data.type.names).replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js if (data['this']) { ?>
+Type: <?js= self.partial('type.tmpl', data.type.names).replace(/\n+/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js if (data['this']) { ?>
 This: <?js= this.linkto(data['this'], data['this']) ?>
 <?js } ?><?js if (data.params && params.length) { ?>
 Parameters:<?js= this.partial('params.tmpl', params) ?><?js } ?>
@@ -15,11 +15,11 @@ Fires: <?js= self.bulletlist(fires, self.linkto) ?><?js } ?><?js if (data.listen
 Listens to Events:<?js= self.bulletlist(listens, self.linkto) ?><?js } ?><?js if (data.listeners && listeners.length) { ?>
 Listeners of This Event:<?js= self.bulletlist(listeners, self.linkto) ?><?js } ?><?js if (data.exceptions && exceptions.length) { ?>
 Throws:<?js if (exceptions.length > 1) { ?><?js exceptions.forEach(function(r) { ?><?js if (exceptions.length > 1) { ?>
-* <?js } ?><?js= self.partial('exceptions.tmpl', r).replace(/\n+/g, '') ?><?js });?>
+* <?js } ?><?js= self.partial('exceptions.tmpl', r).replace(/\n+/g, ' ') ?><?js });?>
 <?js } else { exceptions.forEach(function(r) { ?><?js= self.partial('exceptions.tmpl', r) ?><?js });} } ?><?js if (data.returns && returns.length) { ?>
 Returns: <?js if (returns.length > 1) { ?><?js returns.forEach(function(r) { ?>
-* <?js= self.partial('returns.tmpl', r).replace(/\n/g, '') ?><?js }); ?>
-<?js } else { returns.forEach(function(r, i) { ?><?js= self.partial('returns.tmpl', r).replace(/\n/g, '') ?> <?js if (i+1 < returns.length) {?><?js } });} } ?>
+* <?js= self.partial('returns.tmpl', r).replace(/\n+/g, ' ') ?><?js }); ?>
+<?js } else { returns.forEach(function(r, i) { ?><?js= self.partial('returns.tmpl', r).replace(/\n+/g, ' ') ?> <?js if (i+1 < returns.length) {?><?js } });} } ?>
 <?js if (data.examples && examples.length) { ?>
 Example<?js= examples.length > 1? 's':'' ?>:
 <?js= this.partial('examples.tmpl', examples) ?><?js } ?>
