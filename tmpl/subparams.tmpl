@@ -1,0 +1,45 @@
+<?js
+    var params = obj;
+    
+    /* sort subparams under their parent params (like opts.classname) */
+    var parentParam = null;
+    params.forEach(function(param, i) {
+        if (!param) { return; }
+        if ( parentParam && param.name && param.name.indexOf(parentParam.name + '.') === 0 ) {
+            param.name = param.name.substr(parentParam.name.length+1);
+            parentParam.subparams = parentParam.subparams || [];
+            parentParam.subparams.push(param);
+            params[i] = null;
+        }
+        else {
+            parentParam = param;
+        }
+    });
+    
+    /* determine if we need extra columns, "attributes" and "default" */
+    params.hasAttributes = false;
+    params.hasDefault = false;
+    params.hasName = false;
+    
+    params.forEach(function(param) {
+        if (!param) { return; }
+        
+        if (param.optional || param.nullable || param.variable) {
+            params.hasAttributes = true;
+        }
+        
+        if (param.name) {
+            params.hasName = true;
+        }
+        
+        if (typeof param.defaultvalue !== 'undefined') {
+            params.hasDefault = true;
+        }
+    });
+?>
+|<?js if (params.hasName) {?>|Name|<?js } ?>|Type|<?js if (params.hasAttributes) {?>|Argument|<?js } ?><?js if (params.hasDefault) {?>|Default|<?js } ?>|Description||<?js
+        var self = this;
+	    params.forEach(function(param) {
+	        if (!param) { return; }
+?><?js if (params.hasName) { if (param.name) { param.name = param.name.replace(/\n/g, ''); } ?>
+|<?js= param.name ?><?js } ?><?js if (param.type && param.type.names) {?>|<?js= self.partial('type.tmpl', param.type.names).replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js if (params.hasAttributes) {?>|<?js var attrs = []; if (param.optional) { attrs.push('optional'); } ?><?js if (param.nullable) { attrs.push('nullable'); } if (param.variable) { attrs.push('repeatable'); } if (attrs.length) { var result = attrs.join(', ') || ' '; ?><?js= result ?>|<?js } else { ?> |<?js } } ?><?js if (params.hasDefault) {?>|<?js if (typeof param.defaultvalue !== 'undefined') { if (param.defaultvalue) { param.defaultvalue.replace(/\n/g, '') }?><?js= self.htmlsafe(param.defaultvalue) ?><?js } ?><?js } if (param.description) { param.description = param.description.replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") } else { param.description = ' '; } ?><?js= param.description ?>|<?js }); ?>|
