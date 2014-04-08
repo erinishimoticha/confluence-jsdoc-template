@@ -180,7 +180,7 @@ function buildLink(longname, linkText, options) {
     else if (longname && container && container.length && longname.match(/[><]/)) {
         var reg = RegExp(container[0] + '<(.*)>', 'i');
         var interiorUrl = longname.replace(reg, "$1");
-        if (interiorUrl) {
+        if (interiorUrl && interiorUrl !== longname) {
             interiorUrl = buildLink(interiorUrl, interiorUrl, {
                 linkMap: longnameToUrl
             });
