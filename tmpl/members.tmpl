@@ -5,7 +5,7 @@ var self = this;
 h4. <?js= name ?>
 <?js= data.attribs + name + (data.signature ? data.signature : '') ?><?js if (data.summary) { ?>*<?js= data.summary.replace(/\n/g, '').replace(/([\{\}])/g, "\\$1").replace(/(\{\})/g, "\\$1") ?>*<?js } ?>
 
-<?js if (data.description) { ?><?js= data.description.replace(/\n/g, '').replace(/([\{\}])/g, "\\$1") ?><?js } ?>
+<?js if (data.description) { ?><?js= data.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js } ?>
 <?js= this.partial('details.tmpl', data) ?>
 <?js if (data.examples && examples.length) { ?>h5. Example<?js= examples.length > 1? 's':'' ?>
 <?js= this.partial('examples.tmpl', examples) ?><?js } ?>
