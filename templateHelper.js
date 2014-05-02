@@ -710,6 +710,9 @@ exports.createLink = function(doclet) {
     else {
         filename = getFilename(doclet.memberof || exports.globalName);
         url = filename + '#' + getNamespace(doclet.kind) + doclet.name;
+        if (doclet.kind === 'typedef') {
+            registerLink(doclet.longname, url);
+        }
     }
     
     return url;
