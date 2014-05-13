@@ -3,4 +3,4 @@
 	var doc = obj;
 ?>
 h2. Constructor
-<?js if (doc.kind === 'module' && doc.module) { ?><?js= self.partial('constructormethod.tmpl', doc.module) ?><?js } ?><?js if (doc.kind === 'class') { ?><?js= self.partial('constructormethod.tmpl', doc) ?><?js } ?><?js if (doc.description) { ?><?js= doc.description.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js } ?>
+<?js if (doc.kind === 'module' && doc.module) { ?><?js= self.partial('constructormethod.tmpl', doc.module) ?><?js } ?><?js if (doc.kind === 'class') { ?><?js= self.partial('constructormethod.tmpl', doc) ?><?js } ?><?js if (doc.description) { ?><?js= doc.description.replace(/\n/g, ' ').replace(/([\{\}|\\])/g, "\\$1") ?><?js } ?>

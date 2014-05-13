@@ -9,7 +9,7 @@
 <?js } else { ?>
 h1. <?js if (doc.ancestors && doc.ancestors.length) { ?><?js= doc.ancestors.join('') ?><?js } ?><?js= doc.name ?><?js if (doc.variation) { ?> (<?js= doc.variation ?>)
 <?js } ?>
-<?js if (doc.classdesc) { ?><?js= doc.classdesc.replace(/\n+/g, "").replace(/([\{\}])/, "\\$1") ?>
+<?js if (doc.classdesc) { ?><?js= doc.classdesc.replace(/\n+/g, "").replace(/([\{\}|\\])/, "\\$1") ?>
 <?js } ?>
 <?js= self.partial('constructor.tmpl', doc) ?>
 <?js= self.partial('classdetails.tmpl', doc) ?>
@@ -33,13 +33,13 @@ h3. Requires
 ?>
 h3. Classes
 <?js classes.forEach(function(c) { ?><?js if (classes.length > 1) { ?>
-* <?js } ?><?js= self.linkto(c.longname, c.longname) ?><?js if (c.summary) { ?> (<?js= c.summary.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?>)<?js } ?><?js }); ?><?js } ?><?js
+* <?js } ?><?js= self.linkto(c.longname, c.longname) ?><?js if (c.summary) { ?> (<?js= c.summary.replace(/\n/g, ' ').replace(/([\{\}|\\])/g, "\\$1") ?>)<?js } ?><?js }); ?><?js } ?><?js
     var namespaces = self.find({kind: 'namespace', memberof: doc.longname}); 
     if (doc.kind !== 'globalobj' && namespaces && namespaces.length) { 
 ?>
 
 h3. Namespaces
-<?js namespaces.forEach(function(n) { ?><?js if (namespaces.length > 1) { ?>* <?js } ?><?js= n.longname ?><?js= self.linkto(n.longname, n.name) ?> (<?js if (n.summary) { ?><?js= n.summary.replace(/\n/g, ' ').replace(/([\{\}])/g, "\\$1") ?><?js } ?><?js }); ?><?js } ?>
+<?js namespaces.forEach(function(n) { ?><?js if (namespaces.length > 1) { ?>* <?js } ?><?js= n.longname ?><?js= self.linkto(n.longname, n.name) ?> (<?js if (n.summary) { ?><?js= n.summary.replace(/\n/g, ' ').replace(/([\{\}|\\])/g, "\\$1") ?><?js } ?><?js }); ?><?js } ?>
 <?js
     var members = self.find({kind: 'member', memberof: title === 'Global' ? {isUndefined: true} : doc.longname});
     if (members && members.length && members.forEach) { 
